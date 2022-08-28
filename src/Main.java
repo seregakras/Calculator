@@ -6,7 +6,7 @@ public class Main {
         System.out.print("Enter your expression: ");
         Scanner scan = new Scanner(System.in);
         String expression = scan.nextLine();
-        System.out.println(Main.calc(expression));
+        System.out.println("Result: " + Main.calc(expression));
     }
     public static String calc(String input){
         String output = "";
@@ -20,26 +20,17 @@ public class Main {
             int b = Integer.parseInt(strings[2]);
             if (a >= 1 && a <= 10 && b >= 1 && b <= 10) {
                 switch (strings[1]) {
-                    case ("+"):
-                        result = a + b;
-                        break;
-                    case ("-"):
-                        result = a - b;
-                        break;
-                    case ("*"):
-                        result = a * b;
-                        break;
-                    case ("/"):
-                        result = a / b;
-                        break;
-                    default:
-                        System.out.println("Undefined operation");
+                    case ("+") -> result = a + b;
+                    case ("-") -> result = a - b;
+                    case ("*") -> result = a * b;
+                    case ("/") -> result = a / b;
+                    default -> System.out.println("Undefined operation");
                 }
             } else {
                 System.out.println("Number out of limits");
             }
         }
-        output = result + "";
+        output += result;
         return output;
     }
 }
