@@ -1,4 +1,3 @@
-import java.beans.Expression;
 import java.util.Scanner;
 
 public class Main {
@@ -11,14 +10,13 @@ public class Main {
     }
     public static String calc(String input) {           // метод калькулятор
         String output = "";
-        int result = 0;
+        int result;
         int a, b;
         boolean romeSystem = false;
-        RomeNumber romeNumber[] = RomeNumber.values();      // преобразование перечисления интервала римских цифр от I до X в массив
+        RomeNumber [] romeNumber = RomeNumber.values();      // преобразование перечисления интервала римских цифр от I до X в массив
         String [] strings =  input.split(" ");        // разбиение входной строки на части (операнды и оператор)
         if (strings.length != 3){                           // проверка правильности входящей строки
-            System.out.println("Wrong expression!");
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Wrong expression!");
         }
         else {
             if (check(romeNumber, strings[0]) && check(romeNumber, strings[2])) {   // проверка входящей строки на римскую систему и написание обоих операндов в данной системе
@@ -35,17 +33,13 @@ public class Main {
                     case ("-") -> result = a - b;
                     case ("*") -> result = a * b;
                     case ("/") -> result = a / b;
-                    default -> {
-                        System.out.println("Undefined operation");
-                        throw new UnsupportedOperationException();
-                    }
+                    default -> throw new UnsupportedOperationException("Undefined operation");
                 }
             } else {
-                System.out.println("Number out of limits");
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Number out of limits");
             }
         }
-        if (romeSystem && result <= 0) throw new ArithmeticException();     // проверка результата на положительный диапазон, если система римская
+        if (romeSystem && result <= 0) throw new ArithmeticException("Wrong result in rome system");     // проверка результата на положительный диапазон, если система римская
         else if (romeSystem)
         {
             return inToRoman(result);       // преобразование результата в римскую систему и его возвращение
@@ -53,7 +47,7 @@ public class Main {
         output += result;
         return output;      // возвращение результата в арабской системе
     }
-    public static boolean check(RomeNumber arr[], String str){      // метод проверки соответствия строки одному из элементов перечислений интервала римских цифр от I до X
+    public static boolean check(RomeNumber [] arr, String str){      // метод проверки соответствия строки одному из элементов перечислений интервала римских цифр от I до X
         for (RomeNumber element: arr){
             if(str.equals(element.toString())){
                 return true;
@@ -67,12 +61,12 @@ public class Main {
             throw new IllegalArgumentException();
         }
 
-        String res = "";
+        StringBuilder res = new StringBuilder();
 
         RomeNumberTemplate[] values = RomeNumberTemplate.values();
         for (int i = values.length - 1; i >= 0; i--) {
             while (n >= values[i].number) {
-                res += values[i];
+                res.append(values[i]);
                 n -= values[i].number;
             }
         }
